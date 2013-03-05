@@ -15,13 +15,18 @@
 #
 LOCAL_PATH := $(call my-dir)
 
-ifeq ($(WPA_SUPPLICANT_VERSION),VER_0_8_X)
+ifeq ($(WPA_SUPPLICANT_VERSION),$(filter $(WPA_SUPPLICANT_VERSION),VER_0_8_X VER_0_8_X_CYANO))
 
 ifneq ($(BOARD_WPA_SUPPLICANT_DRIVER),)
   CONFIG_DRIVER_$(BOARD_WPA_SUPPLICANT_DRIVER) := y
 endif
 
+ifeq ($(WPA_SUPPLICANT_VERSION), VER_0_8_X)
 WPA_SUPPL_DIR = external/wpa_supplicant_8
+else
+WPA_SUPPL_DIR = external/wpa_supplicant_8_cyano
+endif
+
 WPA_SRC_FILE :=
 
 include $(WPA_SUPPL_DIR)/wpa_supplicant/android.config
